@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import numpy as np
-import pickle
+from sklearn.externals import joblib
 
 
 # app
@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Loading the model once it's available
-model = pickle.load(open('model.pkl', 'rb'))
+model = joblib.load('model.plk')
 
 # routes
 @app.route('/', methods=['POST'])
@@ -49,7 +49,7 @@ def predict():
             df = df.drop(columns='amenities')
 
             # creating dataframe variable from dictionary
-            ##Alternative to method above. Ran into errors 
+            ##Alternative to method above. Ran into errors
             #df = pd.DataFrame.from_dict(x, orient='index').transpose()
 
             # Make prediction based on created dataframe of user input data
